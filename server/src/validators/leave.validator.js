@@ -1,6 +1,14 @@
 const { body } = require("express-validator");
 
 const applyLeaveValidator = [
+  body("employeeId")
+    .notEmpty()
+    .withMessage("Employee ID is required"),
+
+  body("employeeName")
+    .notEmpty()
+    .withMessage("Employee Name is required"),
+
   body("startDate")
     .notEmpty()
     .withMessage("Start date is required")
@@ -16,8 +24,8 @@ const applyLeaveValidator = [
   body("reason")
     .notEmpty()
     .withMessage("Reason is required")
-    .isLength({ min: 5 })
-    .withMessage("Reason must be at least 5 characters"),
+    .isLength({ min: 3 })
+    .withMessage("Reason must be at least 3 characters"),
 ];
 
 module.exports = {

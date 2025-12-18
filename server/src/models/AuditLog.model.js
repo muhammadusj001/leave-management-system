@@ -2,14 +2,16 @@ const mongoose = require("mongoose");
 
 const auditLogSchema = new mongoose.Schema(
   {
-    admin: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    adminEmail: {
+      type: String,
       required: true,
     },
-    leave: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Leave",
+    employeeEmail: {
+      type: String,
+      required: true,
+    },
+    leaveDate: {
+      type: String,
       required: true,
     },
     action: {

@@ -17,10 +17,17 @@ router.post(
 );
 
 router.get(
-  "/my-leaves",
+  "/my",
   authMiddleware,
   roleMiddleware("Employee"),
   leaveController.getMyLeaves
+);
+
+router.get(
+  "/pending",
+  authMiddleware,
+  roleMiddleware("Admin"),
+  leaveController.getPendingLeaves
 );
 
 router.get(

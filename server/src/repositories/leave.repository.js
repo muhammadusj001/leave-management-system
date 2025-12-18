@@ -5,11 +5,15 @@ const createLeave = (data) => {
 };
 
 const findLeavesByUser = (userId) => {
-  return Leave.find({ employee: userId });
+  return Leave.find({ employee: userId }).sort({ createdAt: -1 });
+};
+
+const findPendingLeaves = () => {
+  return Leave.find({ status: "Pending" }).sort({ createdAt: -1 });
 };
 
 const findAllLeaves = () => {
-  return Leave.find().populate("employee", "email role");
+  return Leave.find().sort({ createdAt: -1 });
 };
 
 const updateLeaveStatus = (leaveId, status) => {
@@ -23,6 +27,7 @@ const updateLeaveStatus = (leaveId, status) => {
 module.exports = {
   createLeave,
   findLeavesByUser,
+  findPendingLeaves,
   findAllLeaves,
   updateLeaveStatus,
 };

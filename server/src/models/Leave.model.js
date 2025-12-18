@@ -7,6 +7,14 @@ const leaveSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    employeeId: {
+      type: String,
+      required: true,
+    },
+    employeeName: {
+      type: String,
+      required: true,
+    },
     startDate: {
       type: Date,
       required: true,

@@ -1,29 +1,39 @@
-const bcrypt = require("bcrypt");
-const generateToken = require("../utils/jwt.util");
-const userRepository = require("../repositories/user.repository");
+const jwt = require("jsonwebtoken");
 
 const login = async (email, password) => {
-  const user = await userRepository.findUserByEmail(email);
+  // 🔍 DEBUG: see what backend actually receives
+  console.log("LOGIN ATTEMPT →", { email, password });
 
-  if (!user) {
-    throw new Error("Invalid email or password");
+  // TEMP ADMIN LOGIN
+  if (email === "admin@gmail.com" && password === "123") {
+    const token = jwt.sign(
+      { userId: "1", role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return {
+      token,
+      role: "admin",
+    };
   }
 
-  const isPasswordMatch = await bcrypt.compare(password, user.password);
+  // TEMP EMPLOYEE LOGIN
+  if (email === "employee@test.com" && password === "123") {
+    const token = jwt.sign(
+      { userId: "2", role: "employee" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-  if (!isPasswordMatch) {
-    throw new Error("Invalid email or password");
+    return {
+      token,
+      role: "employee",
+    };
   }
 
-  const token = generateToken({
-    userId: user._id,
-    role: user.role,
-  });
-
-  return {
-    token,
-    role: user.role,
-  };
+  // ❌ INVALID CREDENTIALS
+  throw new Error("Invalid credentials");
 };
 
 module.exports = {

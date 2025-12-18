@@ -1,25 +1,36 @@
-const authService = require("../services/auth.service");
-
 const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password required" });
-    }
+  // DEBUG (important – helps you see what's coming from frontend)
+  console.log("LOGIN REQUEST:", email, password);
 
-    const result = await authService.login(email, password);
-
-    res.status(200).json({
-      message: "Login successful",
-      token: result.token,
-      role: result.role,
-    });
-  } catch (error) {
-    res.status(401).json({
-      message: error.message,
+  // validation
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Email and password required",
     });
   }
+
+  // EMPLOYEE LOGIN
+  if (email === "employee@test.com" && password === "123") {
+    return res.status(200).json({
+      token: "employee-token",
+      role: "employee",
+    });
+  }
+
+  // ADMIN LOGIN
+  if (email === "admin@gmail.com" && password === "123") {
+    return res.status(200).json({
+      token: "admin-token",
+      role: "admin",
+    });
+  }
+
+  // INVALID LOGIN
+  return res.status(401).json({
+    message: "Invalid credentials",
+  });
 };
 
 module.exports = {

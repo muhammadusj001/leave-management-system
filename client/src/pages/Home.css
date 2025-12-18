@@ -1,0 +1,15 @@
+/* Full screen container */
+.home {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+}
+
+/* Title styling */
+.home-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+}
